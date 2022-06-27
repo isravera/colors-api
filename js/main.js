@@ -2,6 +2,8 @@ document.querySelector('button').addEventListener('click', apiRequest);
 
 async function apiRequest() {
 
+    document.getElementById('results').innerHTML = '';
+
     const color = document.querySelector('input').value;
 
     if(color.length <= 0) {
@@ -14,7 +16,13 @@ async function apiRequest() {
 
         const data = await response.json();
 
-        document.getElementById('results').innerHTML = data;
+        if(data['message']) {
+            document.getElementById('results').innerHTML = data.message;
+        } else {
+
+            document.getElementById('results').innerHTML = `<h3>${data.color}</h3>${data.hex}<p></p><p>${data.rgb}</p>`;
+
+        }
         
     } catch (error) {
 
